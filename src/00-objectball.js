@@ -112,6 +112,7 @@ let gameObject = {
     },
   },
 };
+
 //numPointsScored that takes in an argument of a player's name and returns the number of points scored for that player.
 function numPointsScored(player) {
   for (let key in gameObject.away.players) {
@@ -183,4 +184,56 @@ function playerStats(player) {
     }
   }
   return playerInfo;
+}
+//bigShoeRebounds, that will return the number of rebounds associated with the player that has the largest shoe size.
+function bigShoeRebounds() {
+  let biggestShoeSize = 0;
+  let playerWithBiggestShoe = "";
+  let teamWithBiggestShoe = "";
+
+  for (let team in gameObject) {
+    for (let player in gameObject[team].players) {
+      if (gameObject[team].players[player].shoe > biggestShoeSize) {
+        biggestShoeSize = gameObject[team].players[player].shoe;
+        playerWithBiggestShoe = player;
+        teamWithBiggestShoe = team; // Store the team name
+      }
+    }
+  }
+  // Access the rebounds using the correct team name
+  return gameObject[teamWithBiggestShoe].players[playerWithBiggestShoe]
+    .rebounds;
+}
+//Which player has the most points? Call the function mostPointsScored.
+function mostPointsScored() {
+  let mostPoints = 0;
+  let playerWithMostPoints = "";
+  let teamWithMostPoints = "";
+
+  for (let team in gameObject) {
+    for (let player in gameObject[team].players) {
+      if (gameObject[team].players[player].points > mostPoints) {
+        mostPoints = gameObject[team].players[player].points;
+        playerWithMostPoints = player;
+      }
+    }
+  }
+  // Access the rebounds using the correct player and his points scored
+  return `${playerWithMostPoints} has the most points scored. With ${mostPoints} points`;
+}
+
+function winningTeam() {
+  let homePoints = 0;
+  let awayPoints = 0;
+  for (let player in gameObject.home.players) {
+    homePoints + gameObject.home.players[player].points;
+  }
+  for (let player in gameObject.away.players) {
+    awayPoints + gameObject.away.players[player].points;
+  }
+  if (homePoints > awayPoints) {
+    return `Home Team the "Brooklyn Nets" win with ${homePoints} points!`;
+  } else if (homePoints < awayPoints) {
+    return `Away Team the "Charlotte Hornets" win with ${awayPoints} points!`;
+  }
 }
